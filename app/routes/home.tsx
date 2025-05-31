@@ -1,13 +1,25 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useEffect } from "react";
+
+import Dashboard from "~/components/dashboard/dashboard";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "The Continental Post" },
+    { name: "Stories from around the globe" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+      } else {
+      }
+    });
+  }, []);
+
+  return <Dashboard />;
 }
