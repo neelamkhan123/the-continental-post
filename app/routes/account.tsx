@@ -17,10 +17,10 @@ export default function Account() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full min-h-[90vh] mx-20">
+    <div className="flex flex-col justify-center items-center w-full min-h-[90vh] mx-10 md:mx-20">
       <h1 className="text-6xl accent-font mb-6">Hi, {user?.displayName}</h1>
 
-      <div className="bg-white w-2/3 h-[60vh] p-4 rounded-lg shadow-md">
+      <div className="bg-white w-full xl:w-2/3 h-[60vh] p-4 rounded-lg shadow-md">
         <div className="relative flex w-full mx-auto bg-blue-100 p-1 rounded-full mb-4">
           <h2 className="w-full z-10 text-center py-2 font-bold text-blue-600">
             My Bookmarks
