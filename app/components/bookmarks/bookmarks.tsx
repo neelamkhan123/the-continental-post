@@ -3,19 +3,18 @@ import Bookmark from "./bookmark";
 import type { BookmarkProps } from "./bookmark";
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import type { User } from "firebase/auth";
 import { auth } from "../../../firebase";
 
 export default function Bookmarks() {
   const [bookmarks, setBookmarks] = useState<BookmarkProps[]>([]);
-  const [user, setUser] = useState<User | null>(null);
+  const [uid, setUid] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
       if (currentUser) {
         fetchBookmarks(currentUser.uid);
+        setUid(currentUser.uid);
       } else {
         setBookmarks([]);
         setLoading(false);
@@ -57,6 +56,10 @@ export default function Bookmarks() {
     }
   };
 
+  const handleDelete = (id: string) => {
+    setBookmarks((prev) => prev.filter((b) => b.id !== id));
+  };
+
   return (
     <div className="h-full">
       {!loading ? (
@@ -68,11 +71,14 @@ export default function Bookmarks() {
                   title={bookmark.title}
                   urlToImage={bookmark.urlToImage}
                   url={bookmark.url}
+                  uid={uid}
+                  id={bookmark.id}
+                  onDelete={handleDelete}
                 />
               </li>
             ))
           ) : (
-            <div className="flex justify-center items-center h-full">
+            <div className="col-span-4 text-center">
               <span className="text-gray-400">Nothing bookmarked yet :(</span>
             </div>
           )}

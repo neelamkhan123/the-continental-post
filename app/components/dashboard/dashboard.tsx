@@ -1,7 +1,8 @@
-import React from "react";
-import { useEffect, useState } from "react";
+// Dashboard.tsx
+import React, { useEffect, useState } from "react";
 import Article from "../article/article";
 import type { ArticleProps } from "../article/article";
+import Pagination from "../pagination/pagination";
 
 type ArticleResponse = {
   status: string;
@@ -13,6 +14,17 @@ export default function Dashboard() {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const [articles, setArticles] = useState<ArticleProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const articlesPerPage = 5;
+  const startIndex = (currentPage - 1) * articlesPerPage;
+  const endIndex = startIndex + articlesPerPage;
+  const currentArticles = articles.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   useEffect(() => {
     setLoading(true);
@@ -24,11 +36,12 @@ export default function Dashboard() {
         );
 
         if (!res.ok) {
-          throw new Error("Failed to get article");
+          throw new Error("Failed to get articles");
         }
 
         const data: ArticleResponse = await res.json();
         setArticles(data.articles);
+        setCurrentPage(1); // reset to page 1 on new fetch
       } catch (error) {
         console.error("Error getting articles", error);
       } finally {
@@ -43,25 +56,24 @@ export default function Dashboard() {
     <div className="flex flex-col items-center pt-10 mb-20">
       <h1 className="text-7xl accent-font font-bold mb-10">Top Headlines</h1>
       {!loading ? (
-        <ul className="flex flex-col justify-center items-center space-y-20">
-          {articles.slice(0, 3).map((article, index) => (
-            <li
-              className="max-w-2/3 bg-white rounded-lg shadow-lg p-8"
-              key={index}
-            >
-              <Article
-                title={article.title}
-                author={article.author}
-                url={article.url}
-                urlToImage={article.urlToImage}
-                publishedAt={article.publishedAt}
-                content={article.content}
-                description={article.description}
-                source={article.source}
-              />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="flex flex-col justify-center items-center space-y-20">
+            {currentArticles.map((article, index) => (
+              <li
+                className="max-w-2/3 bg-white rounded-lg shadow-lg p-8"
+                key={index}
+              >
+                <Article {...article} />
+              </li>
+            ))}
+          </ul>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
       ) : (
         <div className="loader-large"></div>
       )}
