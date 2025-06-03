@@ -11,7 +11,6 @@ type ArticleResponse = {
 };
 
 export default function Discover() {
-  const API_KEY = import.meta.env.VITE_API_KEY;
   const [articles, setArticles] = useState<ArticleProps[]>([]);
   const [query, setQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +34,7 @@ export default function Discover() {
 
       try {
         const res = await fetch(
-          `https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
+          `https://newsapi.org/v2/everything?q=${query}&apiKey=8cc19507da084b5a958d6755bf69a6ab`
         );
 
         if (!res.ok) {

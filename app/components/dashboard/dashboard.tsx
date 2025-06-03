@@ -11,7 +11,6 @@ type ArticleResponse = {
 };
 
 export default function Dashboard() {
-  const API_KEY = import.meta.env.VITE_API_KEY;
   const [articles, setArticles] = useState<ArticleProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -32,7 +31,7 @@ export default function Dashboard() {
     async function fetchNews() {
       try {
         const res = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
+          `https://newsapi.org/v2/top-headlines?country=us&apiKey=8cc19507da084b5a958d6755bf69a6ab`
         );
 
         if (!res.ok) {
