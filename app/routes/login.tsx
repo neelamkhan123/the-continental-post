@@ -40,6 +40,7 @@ export default function Login() {
       setErrors(
         "We couldn’t find an account with those credentials. Please check your email and password."
       );
+      setErrors("Cannot process this action. Please try again later.");
       console.error("Login error:", error.code, error.message);
     } finally {
       setLoading(false);
@@ -82,7 +83,7 @@ export default function Login() {
             />
           </div>
 
-          <span className="text-red-600 text-xs font-bold">{errors}</span>
+          <span className="text-red-600 text-xs font-bold mb-4">{errors}</span>
 
           <button
             type="submit"

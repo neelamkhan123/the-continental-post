@@ -49,6 +49,10 @@ export default function SignUp() {
       if (error.code === "auth/weak-password") {
         setErrors("The password should be a minimum of 6 characters");
       }
+      if (error.code === "auth/invalid-email") {
+        setErrors("Please enter a valid email");
+      }
+      setErrors("Cannot process this action. Please try again later.");
       console.error("Error signing up:", error.code, error.message);
     } finally {
       setLoading(false);
@@ -108,7 +112,7 @@ export default function SignUp() {
             />
           </div>
 
-          <span className="text-red-600 text-xs font-bold">{errors}</span>
+          <span className="text-red-600 text-xs font-bold mb-4">{errors}</span>
 
           <button
             type="submit"
