@@ -35,15 +35,16 @@ export default function Discover() {
 
       try {
         const res = await fetch(
-          `https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`
+          `/.netlify/functions/search-news?q=${encodeURIComponent(query)}`
         );
 
         if (!res.ok) {
-          throw new Error("Failed to get article");
+          throw new Error("Failed to get articles");
         }
 
         const data: ArticleResponse = await res.json();
         setArticles(data.articles);
+        setCurrentPage(1); // Reset pagination when search changes
       } catch (error) {
         console.error("Error getting articles", error);
       } finally {

@@ -33,17 +33,13 @@ export default function Dashboard() {
 
     async function fetchNews() {
       try {
-        const res = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
-        );
+        const res = await fetch("/.netlify/functions/get-top-headlines");
 
-        if (!res.ok) {
-          throw new Error("Failed to get articles");
-        }
+        if (!res.ok) throw new Error("Failed to get articles");
 
         const data: ArticleResponse = await res.json();
         setArticles(data.articles);
-        setCurrentPage(1); // reset to page 1 on new fetch
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error getting articles", error);
       } finally {
