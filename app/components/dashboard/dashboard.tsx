@@ -44,6 +44,11 @@ export default function Dashboard() {
         setCurrentPage(1); // reset to page 1 on new fetch
       } catch (error) {
         console.error("Error getting articles", error);
+        if (!API_KEY) {
+          throw new Error(
+            "VITE_API_KEY is not defined. Check your environment variables."
+          );
+        }
       } finally {
         setLoading(false);
       }
