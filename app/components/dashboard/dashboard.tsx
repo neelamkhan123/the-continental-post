@@ -16,6 +16,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
+  console.log("key", API_KEY);
+
   const articlesPerPage = 5;
   const startIndex = (currentPage - 1) * articlesPerPage;
   const endIndex = startIndex + articlesPerPage;
@@ -44,11 +46,6 @@ export default function Dashboard() {
         setCurrentPage(1); // reset to page 1 on new fetch
       } catch (error) {
         console.error("Error getting articles", error);
-        if (!API_KEY) {
-          throw new Error(
-            "VITE_API_KEY is not defined. Check your environment variables."
-          );
-        }
       } finally {
         setLoading(false);
       }
