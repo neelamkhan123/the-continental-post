@@ -35,7 +35,9 @@ export default function Discover() {
 
       try {
         const res = await fetch(
-          `/.netlify/functions/search-news?q=${encodeURIComponent(query)}`
+          `/.netlify/functions/get-query-headlines?q=${encodeURIComponent(
+            query
+          )}`
         );
 
         if (!res.ok) {

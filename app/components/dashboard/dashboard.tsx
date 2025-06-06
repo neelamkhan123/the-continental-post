@@ -16,8 +16,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  console.log("key", API_KEY);
-
   const articlesPerPage = 5;
   const startIndex = (currentPage - 1) * articlesPerPage;
   const endIndex = startIndex + articlesPerPage;
