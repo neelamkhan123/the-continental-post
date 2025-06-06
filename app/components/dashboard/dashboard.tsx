@@ -32,7 +32,7 @@ export default function Dashboard() {
     async function fetchNews() {
       try {
         const res = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=8cc19507da084b5a958d6755bf69a6ab`
+          `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`
         );
 
         if (!res.ok) {
